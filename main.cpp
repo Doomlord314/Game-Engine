@@ -2,15 +2,31 @@
 #include "Objects.h"
 #include <stdlib.h>
 #include <time.h>
+#include <iostream>
+// Example code
+ObjectManager O;
+int i = 0;
+void foo()
+{
+    std::cout << "AAAA";
+    i++;
+}
+void destroy_object()
+{
+    O.Delete(1,1);
+}
 int main()
 {
     srand(time(NULL));
     sf::RenderWindow window(sf::VideoMode(500, 500), "SFML works!");
-    ObjectManager O;
     window.setFramerateLimit(60);
     O.push_back(Object(250,20,sf::Color::Red, 100, 20));
     O.push_back(Object(250,480,sf::Color::Red, 100, 20));
     O.push_back(Object(250,250,sf::Color::Green, 20, 20));
+    font.loadFromFile("arial.ttf");
+    O.push_back(Text(250,250,sf::Color::Green, 20,"Hey"));
+    O.push_back(Button(250,250,sf::Color::Green,20,20,foo));
+    O.push_back(Button(250,450,sf::Color::Blue,20,20,destroy_object));
     int bsX = 3;
     int bsY = 5;
     while (window.isOpen())
@@ -30,6 +46,7 @@ int main()
         {
             O.Objects[0].move(10,0);
         }
+        O.Texts[0].change_text("Hey: " + to_string(i));
         //Ball Movement
         O.Objects[2].move(bsX,bsY);
         if(O.Objects[2].y < 0 || O.Objects[2].y > 500)
